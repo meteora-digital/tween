@@ -1,0 +1,33 @@
+{
+  "name": "@meteora-digital/tween",
+  "version": "0.0.0",
+  "description": "A class to tween number values - can be used to animate element styles",
+  "main": "dist/js/tween.js",
+  "scripts": {
+    "test": "npm i && gulp"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/meteora-digital/tween.git"
+  },
+  "keywords": [
+    "JavaScript",
+    "es6",
+    "class",
+    "tweening",
+    "animation"
+  ],
+  "author": "Emmanuel Davies",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/meteora-digital/tween/issues"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.10.2",
+    "@babel/preset-env": "^7.10.2",
+    "gulp": "^4.0.2",
+    "gulp-babel": "^8.0.0",
+    "gulp-plumber": "^1.2.1"
+  },
+  "homepage": "https://github.com/meteora-digital/tween#readme"
+}
