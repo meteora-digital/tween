@@ -33,7 +33,7 @@ const image = document.querySelector('.banner__image');
 | fps | number | The frames per second for the animation | 60 |
 
 ```javascript
-const Tween = new Tween({
+const Controller = new Tween({
 	fps: 60,
 });
 ```
@@ -51,7 +51,7 @@ the animate() method takes 3 arguments
 | duration | A length of time in milliseconds | 300 |
 
 ```javascript
-Tween.animate({
+Controller.animate({
   from: 0,
   to: 100,
 }, (value) => {
