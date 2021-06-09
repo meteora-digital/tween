@@ -6,9 +6,8 @@ The class will handle the tweening, you do the rest!
 
 ## Installation
 
-with webpack
-
 ```bash
+npm i @meteora-digital/tween
 yarn add @meteora-digital/tween
 ```
 
@@ -29,10 +28,9 @@ const image = document.querySelector('.banner__image');
 
 #### Create a controller!
 
-| Option | Type | Description |
-|--------|------|-------------|
-| duration | number | number in milliseconds for how long the tween should take to complete | 
-| fps | number | The frames per second for the animation | 
+| Option | Type | Description | Default |
+|--------|------|-------------|---------|
+| fps | number | The frames per second for the animation | 60 |
 
 ```javascript
 const Tween = new Tween({
