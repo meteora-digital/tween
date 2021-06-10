@@ -30,7 +30,7 @@ const image = document.querySelector('.banner__image');
 
 | Option | Type | Description | Default |
 |--------|------|-------------|---------|
-| fps | number | The frames per second for the animation | 60 |
+| fps | number | the frame rate for the tween | 60 |
 
 ```javascript
 const Controller = new Tween({
@@ -51,6 +51,8 @@ the tween() method takes 3 arguments
 | duration | A length of time in milliseconds | 300 |
 
 The tween method will load the controller with a new task, it can only have one task at a time.
+
+#### Note this function uses rounding to stop the function from looping continuously without any visual changes, therefore is is best to use whole number for situation like the example below.
 
 ```javascript
 Controller.tween({ from: 0, to: 100 }, (value) => image.style.opacity = `${value / 100}px`, 300);
