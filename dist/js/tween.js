@@ -60,13 +60,13 @@ var Tween = /*#__PURE__*/function () {
       if (tween.from != tween.to && func && typeof func == 'function') {
         // Some FPS maths
         this.time.current = Date.now();
-        this.time.elapsed = this.time.current - this.time.previous; // If the time is right
+        this.time.elapsed = this.time.current - this.time.previous; // Change the value of the tween
 
-        if (this.time.elapsed >= this.time.interval * duration / 1000) {
+        tween.from -= Math.round((tween.from - tween.to) / (this.settings.fps * duration / 1000) * 100) / 100; // If the time is right
+
+        if (this.time.elapsed >= this.time.interval) {
           // More FPS maths
-          this.time.previous = this.time.current - this.time.elapsed % this.time.interval; // Change the value of the tween
-
-          tween.from -= Math.round((tween.from - tween.to) / (this.time.interval * duration / 1000) * 100) / 100; // Check if the tween's value is what is needs to be
+          this.time.previous = this.time.current - this.time.elapsed % this.time.interval; // Check if the tween's value is what is needs to be
 
           if (Math.round(tween.from) == tween.to) tween.from = tween.to; // Call the function
 
