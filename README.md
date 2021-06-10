@@ -42,7 +42,7 @@ const Controller = new Tween({
 
 Use tweening to smoothly animate a number from one value to another.
 
-the animate() method takes 3 arguments
+the tween() method takes 3 arguments
 
 | Type | Description | Defaults |
 |------|-------------|----------|
@@ -50,13 +50,31 @@ the animate() method takes 3 arguments
 | function | A function that returns the current value | (value) => console.log(value); |
 | duration | A length of time in milliseconds | 300 |
 
+The tween method will load the controller with a new task, it can only have one task at a time.
+
 ```javascript
-Controller.animate({
+Controller.tween({
   from: 0,
   to: 100,
 }, (value) => {
   image.style.opacity = `${value / 100}px`;
 }, 300);
+```
+
+## Stopping the tween
+
+If we ever need to stop the animation we can use the stop() method
+
+```javascript
+Controller.stop();
+```
+
+## Restarting the tween
+
+If we have stopped the animation we can restart it using the start() method
+
+```javascript
+Controller.start();
 ```
 
 ## License

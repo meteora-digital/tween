@@ -41,43 +41,71 @@ var Tween = /*#__PURE__*/function () {
       current: null,
       elapsed: null,
       interval: 1000 / this.settings.fps
-    };
+    }; // This will hold the current task
+
+    this.task = {};
   }
 
   _createClass(Tween, [{
+    key: "tween",
+    value: function tween() {
+      var _tween = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {
+        from: 0,
+        to: 100
+      };
+
+      var func = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : this["default"];
+      var duration = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 300;
+      // Load in the new task
+      this.task = {
+        tween: _tween,
+        func: func,
+        duration: duration
+      }; // Call the start method to get the ball rolling
+
+      this.start();
+    }
+  }, {
     key: "animate",
     value: function animate() {
       var _this = this;
 
-      var tween = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {
-        from: 0,
-        to: 100
-      };
-      var func = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : this["default"];
-      var duration = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 300;
-
       // If it needs to tween and we have a valid tween function
-      if (tween.from != tween.to && func && typeof func == 'function') {
+      if (this.task.enabled && this.task.tween.from != this.task.tween.to && this.task.func && typeof this.task.func == 'function') {
         // Some FPS maths
         this.time.current = Date.now();
         this.time.elapsed = this.time.current - this.time.previous; // Change the value of the tween
 
-        tween.from -= Math.round((tween.from - tween.to) / (duration / 60) * 100) / 100; // If the time is right
+        this.task.tween.from -= Math.round((this.task.tween.from - this.task.tween.to) / (this.task.duration / 60) * 100) / 100; // If the time is right
 
         if (this.time.elapsed >= this.time.interval) {
           // More FPS maths
           this.time.previous = this.time.current - this.time.elapsed % this.time.interval; // Check if the tween's value is what is needs to be
 
-          if (Math.round(tween.from) == tween.to) tween.from = tween.to; // Call the function
+          if (Math.round(this.task.tween.from) == this.task.tween.to) this.task.tween.from = this.task.tween.to; // Call the function
 
-          func(tween.from);
+          this.task.func(this.task.tween.from);
         } // Call the function again
 
 
         window.requestAnimationFrame(function () {
-          return _this.animate(tween, func, duration);
+          return _this.animate();
         });
       }
+    }
+  }, {
+    key: "stop",
+    value: function stop() {
+      // Disable the animation
+      this.task.enabled = false;
+    }
+  }, {
+    key: "start",
+    value: function start() {
+      // Enable the animation
+      this.task.enabled = true; // Call the animate method to get the ball rolling
+
+      this.animate();
     }
   }]);
 

@@ -26,30 +26,57 @@ export default class Tween {
       elapsed: null,
       interval: 1000 / this.settings.fps,
     }
+
+    // This will hold the current task
+    this.task = {};
   }
 
-  animate(tween = {from: 0, to: 100}, func = this.default, duration = 300) {
+  tween(tween = {from: 0, to: 100}, func = this.default, duration = 300) {
+    // Load in the new task
+    this.task = {
+      tween: tween,
+      func: func,
+      duration: duration, 
+    }
+
+    // Call the start method to get the ball rolling
+    this.start();
+  }
+
+  animate() {
     // If it needs to tween and we have a valid tween function
-    if (tween.from != tween.to && func && typeof func == 'function') {
+    if (this.task.enabled && this.task.tween.from != this.task.tween.to && this.task.func && typeof this.task.func == 'function') {
       // Some FPS maths
       this.time.current = Date.now();
       this.time.elapsed = this.time.current - this.time.previous;
 
       // Change the value of the tween
-      tween.from -= Math.round(((tween.from - tween.to) / (duration / 60)) * 100) / 100;
+      this.task.tween.from -= Math.round(((this.task.tween.from - this.task.tween.to) / (this.task.duration / 60)) * 100) / 100;
 
       // If the time is right
       if (this.time.elapsed >= this.time.interval) {
         // More FPS maths
         this.time.previous = this.time.current - (this.time.elapsed % this.time.interval);
         // Check if the tween's value is what is needs to be
-        if (Math.round(tween.from) == tween.to) tween.from = tween.to;
+        if (Math.round(this.task.tween.from) == this.task.tween.to) this.task.tween.from = this.task.tween.to;
         // Call the function
-        func(tween.from);
+        this.task.func(this.task.tween.from);
       }
 
       // Call the function again
-      window.requestAnimationFrame(() => this.animate(tween, func, duration));
+      window.requestAnimationFrame(() => this.animate());
     }
+  }
+
+  stop() {
+    // Disable the animation
+    this.task.enabled = false;
+  }
+
+  start() {
+    // Enable the animation
+    this.task.enabled = true;
+    // Call the animate method to get the ball rolling
+    this.animate()
   }
 }
