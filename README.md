@@ -62,19 +62,21 @@ the tween() method takes 3 arguments:
 
 ##### Stopping the tween
 
-If we ever need to stop the animation we can use the stop() method
-
 ```javascript
 Controller.stop();
 ```
 
-##### Restarting the tween
+If we ever need to stop the animation we can use the stop() method
 
-If we have stopped the animation we can restart it using the start() method
+
+##### Restarting the tween
 
 ```javascript
 Controller.start();
 ```
+
+If we have stopped the animation we can restart it using the start() method
+
 
 ###### License
 [MIT](https://choosealicense.com/licenses/mit/)
