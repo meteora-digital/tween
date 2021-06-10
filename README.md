@@ -43,6 +43,10 @@ const Controller = new Tween({
 
 ##### Tweening - smoothly animate a number from one value to another.
 
+```javascript
+Controller.tween({ from: 0, to: 100 }, (value) => image.style.opacity = `${value / 100}px`, 300);
+```
+
 The tween method will load the controller with a new task, it can currently only have one task at a time.
 the tween() method takes 3 arguments:
 
@@ -53,11 +57,8 @@ the tween() method takes 3 arguments:
 | duration | A length of time in milliseconds | 300 |
 
 
-###### Note this function uses rounding to stop the function from looping continuously without any visual changes, therefore is is best to use whole numbers for situations like the example below.
+###### Note this function uses rounding to stop the function from looping continuously without any visual changes, therefore is is best to use whole numbers for situations like the example above.
 
-```javascript
-Controller.tween({ from: 0, to: 100 }, (value) => image.style.opacity = `${value / 100}px`, 300);
-```
 
 ##### Stopping the tween
 
