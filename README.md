@@ -40,11 +40,10 @@ const Controller = new Tween({
 });
 ```
 
-##### Tweening
+##### Tweening - smoothly animate a number from one value to another.
 
-Use tweening to smoothly animate a number from one value to another.
-
-the tween() method takes 3 arguments
+The tween method will load the controller with a new task, it can currently only have one task at a time.
+the tween() method takes 3 arguments:
 
 | Type | Description | Defaults |
 |------|-------------|----------|
@@ -52,7 +51,6 @@ the tween() method takes 3 arguments
 | function | A function that returns the current value | (value) => console.log(value); |
 | duration | A length of time in milliseconds | 300 |
 
-The tween method will load the controller with a new task, it can only have one task at a time.
 
 ###### Note this function uses rounding to stop the function from looping continuously without any visual changes, therefore is is best to use whole numbers for situations like the example below.
 
