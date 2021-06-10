@@ -53,12 +53,7 @@ the tween() method takes 3 arguments
 The tween method will load the controller with a new task, it can only have one task at a time.
 
 ```javascript
-Controller.tween({
-  from: 0,
-  to: 100,
-}, (value) => {
-  image.style.opacity = `${value / 100}px`;
-}, 300);
+Controller.tween({ from: 0, to: 100 }, (value) => image.style.opacity = `${value / 100}px`, 300);
 ```
 
 ### Stopping the tween
