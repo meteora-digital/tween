@@ -52,7 +52,7 @@ the tween() method takes 3 arguments
 
 The tween method will load the controller with a new task, it can only have one task at a time.
 
-#### Note this function uses rounding to stop the function from looping continuously without any visual changes, therefore is is best to use whole number for situation like the example below.
+#### Note this function uses rounding to stop the function from looping continuously without any visual changes, therefore is is best to use whole numbers for situations like the example below.
 
 ```javascript
 Controller.tween({ from: 0, to: 100 }, (value) => image.style.opacity = `${value / 100}px`, 300);
