@@ -44,7 +44,7 @@ const Controller = new Tween({
 #### Tweening - smoothly animate a number from one value to another.
 
 ```javascript
-Controller.tween({ from: 0, to: 100 }, (value) => image.style.opacity = `${value / 100}px`, 300);
+Controller.tween({ from: 0, to: 100 }, (value) => image.style.opacity = value / 100, 300);
 ```
 
 The tween method will load the controller with a new task, it can currently only have one task at a time.
