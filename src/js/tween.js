@@ -36,7 +36,7 @@ export default class Tween {
       this.time.elapsed = this.time.current - this.time.previous;
 
       // Change the value of the tween
-      tween.from -= Math.round(((tween.from - tween.to) / (this.settings.fps * duration / 1000)) * 100) / 100;
+      tween.from -= Math.round(((tween.from - tween.to) / (duration / 60)) * 100) / 100;
 
       // If the time is right
       if (this.time.elapsed >= this.time.interval) {
