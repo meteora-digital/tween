@@ -15,7 +15,7 @@ yarn add @meteora-digital/tween
 
 ```html
 <section class="banner">
-	<div class="banner__image" style="background-image: url('path/to/your/image.jpg');"></div>
+  <div class="banner__image" style="background-image: url('path/to/your/image.jpg');"></div>
 </section>
 ```
 
@@ -34,7 +34,7 @@ const image = document.querySelector('.banner__image');
 
 ```javascript
 const Controller = new Tween({
-	fps: 60,
+  fps: 60,
 });
 ```
 
@@ -61,7 +61,7 @@ Controller.tween({
 }, 300);
 ```
 
-## Stopping the tween
+### Stopping the tween
 
 If we ever need to stop the animation we can use the stop() method
 
@@ -69,7 +69,7 @@ If we ever need to stop the animation we can use the stop() method
 Controller.stop();
 ```
 
-## Restarting the tween
+### Restarting the tween
 
 If we have stopped the animation we can restart it using the start() method
 
