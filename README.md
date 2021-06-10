@@ -28,7 +28,7 @@ const banner = document.querySelector('.banner');
 const image = document.querySelector('.banner__image');
 ```
 
-##### Create a controller!
+#### Create a controller!
 
 ```javascript
 const Controller = new Tween({
@@ -41,7 +41,7 @@ const Controller = new Tween({
 | fps | number | the frame rate for the tween | 60 |
 
 
-##### Tweening - smoothly animate a number from one value to another.
+#### Tweening - smoothly animate a number from one value to another.
 
 ```javascript
 Controller.tween({ from: 0, to: 100 }, (value) => image.style.opacity = `${value / 100}px`, 300);
@@ -60,7 +60,7 @@ the tween() method takes 3 arguments:
 ###### Note this function uses rounding to stop the function from looping continuously without any visual changes, therefore is is best to use whole numbers for situations like the example above.
 
 
-##### Stopping the tween
+#### Stopping the tween
 
 ```javascript
 Controller.stop();
@@ -69,7 +69,7 @@ Controller.stop();
 If we ever need to stop the animation we can use the stop() method
 
 
-##### Restarting the tween
+#### Restarting the tween
 
 ```javascript
 Controller.start();
