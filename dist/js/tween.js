@@ -76,7 +76,7 @@ var Tween = /*#__PURE__*/function () {
         this.time.current = Date.now();
         this.time.elapsed = this.time.current - this.time.previous; // Change the value of the tween
 
-        this.task.tween.from -= Math.round((this.task.tween.from - this.task.tween.to) / (this.task.duration / 60) * 100) / 100; // If the time is right
+        this.task.tween.from -= Math.round((this.task.tween.from - this.task.tween.to) / (this.task.duration / 100) * 100) / 100; // If the time is right
 
         if (this.time.elapsed >= this.time.interval) {
           // More FPS maths
