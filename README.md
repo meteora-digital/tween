@@ -13,14 +13,14 @@ yarn add @meteora-digital/tween
 
 ## Usage
 
-##### HTML
+#### HTML
 ```html
 <section class="banner">
   <div class="banner__image" style="background-image: url('path/to/your/image.jpg');"></div>
 </section>
 ```
 
-##### JavaScript
+#### JavaScript
 ```javascript
 import Tween from '@meteora-digital/tween';
 
@@ -28,7 +28,7 @@ const banner = document.querySelector('.banner');
 const image = document.querySelector('.banner__image');
 ```
 
-#### Create a controller!
+##### Create a controller!
 
 | Option | Type | Description | Default |
 |--------|------|-------------|---------|
@@ -40,7 +40,7 @@ const Controller = new Tween({
 });
 ```
 
-#### Tweening
+##### Tweening
 
 Use tweening to smoothly animate a number from one value to another.
 
@@ -54,13 +54,13 @@ the tween() method takes 3 arguments
 
 The tween method will load the controller with a new task, it can only have one task at a time.
 
-##### Note this function uses rounding to stop the function from looping continuously without any visual changes, therefore is is best to use whole numbers for situations like the example below.
+###### Note this function uses rounding to stop the function from looping continuously without any visual changes, therefore is is best to use whole numbers for situations like the example below.
 
 ```javascript
 Controller.tween({ from: 0, to: 100 }, (value) => image.style.opacity = `${value / 100}px`, 300);
 ```
 
-### Stopping the tween
+##### Stopping the tween
 
 If we ever need to stop the animation we can use the stop() method
 
@@ -68,7 +68,7 @@ If we ever need to stop the animation we can use the stop() method
 Controller.stop();
 ```
 
-### Restarting the tween
+##### Restarting the tween
 
 If we have stopped the animation we can restart it using the start() method
 
@@ -76,6 +76,6 @@ If we have stopped the animation we can restart it using the start() method
 Controller.start();
 ```
 
-## License
+###### License
 [MIT](https://choosealicense.com/licenses/mit/)
 
