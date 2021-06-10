@@ -30,15 +30,16 @@ const image = document.querySelector('.banner__image');
 
 ##### Create a controller!
 
-| Option | Type | Description | Default |
-|--------|------|-------------|---------|
-| fps | number | the frame rate for the tween | 60 |
-
 ```javascript
 const Controller = new Tween({
   fps: 60,
 });
 ```
+
+| Option | Type | Description | Default |
+|--------|------|-------------|---------|
+| fps | number | the frame rate for the tween | 60 |
+
 
 ##### Tweening - smoothly animate a number from one value to another.
 
