@@ -9,6 +9,9 @@ export default class Tween {
     // This will be the default function
     this.default = (value) => console.log(value);
 
+    // Store the events here
+    this.events = {};
+
     // User settings defaults
     this.settings = {
       fps: 60,
@@ -65,18 +68,46 @@ export default class Tween {
 
       // Call the function again
       window.requestAnimationFrame(() => this.animate());
+    }else if (this.task.tween.from == this.task.tween.to) {
+      // End the tween function
+      this.end();
     }
-  }
-
-  stop() {
-    // Disable the animation
-    this.task.enabled = false;
   }
 
   start() {
     // Enable the animation
     this.task.enabled = true;
     // Call the animate method to get the ball rolling
-    this.animate()
+    this.animate();
+    // Call the start callback
+    this.callback('start');
+  }
+
+  stop() {
+    // Disable the animation
+    this.task.enabled = false;
+    // Call the stop callback
+    this.callback('stop');
+  }
+
+  end() {
+    // Disable the animation
+    this.task.enabled = false;
+    // Call the end callback
+    this.callback('end');
+  }
+
+  callback(type) {
+    // run the callback functions
+    if (this.events[type]) this.events[type].forEach((event) => event());
+  }
+
+  on(event, func) {
+    // If we loaded an event and it's not the on event and we also loaded a function
+    if (event && event != 'on' && event != 'callback' && this[event] && func && typeof func == 'function') {
+      if (this.events[event] == undefined) this.events[event] = [];
+      // Push a new event to the event array
+      this.events[event].push(func);
+    }
   }
 }

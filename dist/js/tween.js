@@ -24,8 +24,10 @@ var Tween = /*#__PURE__*/function () {
 
     this["default"] = function (value) {
       return console.log(value);
-    }; // User settings defaults
+    }; // Store the events here
 
+
+    this.events = {}; // User settings defaults
 
     this.settings = {
       fps: 60
@@ -91,13 +93,10 @@ var Tween = /*#__PURE__*/function () {
         window.requestAnimationFrame(function () {
           return _this.animate();
         });
+      } else if (this.task.tween.from == this.task.tween.to) {
+        // End the tween function
+        this.end();
       }
-    }
-  }, {
-    key: "stop",
-    value: function stop() {
-      // Disable the animation
-      this.task.enabled = false;
     }
   }, {
     key: "start",
@@ -105,7 +104,43 @@ var Tween = /*#__PURE__*/function () {
       // Enable the animation
       this.task.enabled = true; // Call the animate method to get the ball rolling
 
-      this.animate();
+      this.animate(); // Call the start callback
+
+      this.callback('start');
+    }
+  }, {
+    key: "stop",
+    value: function stop() {
+      // Disable the animation
+      this.task.enabled = false; // Call the stop callback
+
+      this.callback('stop');
+    }
+  }, {
+    key: "end",
+    value: function end() {
+      // Disable the animation
+      this.task.enabled = false; // Call the end callback
+
+      this.callback('end');
+    }
+  }, {
+    key: "callback",
+    value: function callback(type) {
+      // run the callback functions
+      if (this.events[type]) this.events[type].forEach(function (event) {
+        return event();
+      });
+    }
+  }, {
+    key: "on",
+    value: function on(event, func) {
+      // If we loaded an event and it's not the on event and we also loaded a function
+      if (event && event != 'on' && event != 'callback' && this[event] && func && typeof func == 'function') {
+        if (this.events[event] == undefined) this.events[event] = []; // Push a new event to the event array
+
+        this.events[event].push(func);
+      }
     }
   }]);
 

@@ -77,6 +77,22 @@ Controller.start();
 
 If we have stopped the animation we can restart it using the start() method
 
+#### Callbacks
+
+###### The available callbacks are 'start', 'stop' and 'end'. 
+
+| Event | Description |
+|------|-------------|
+| start | Triggered when the animation starts |
+| stop | Triggered when the animation is stopped via the .stop() method |
+| end | Triggered when the animation has come to it's end naturally |
+
+```javascript
+Controller.on('start', () => console.log('Animation has started!'));
+```
+
+If we have stopped the animation we can restart it using the start() method
+
 
 ###### License
 [MIT](https://choosealicense.com/licenses/mit/)
