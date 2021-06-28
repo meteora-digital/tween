@@ -101,28 +101,37 @@ var Tween = /*#__PURE__*/function () {
   }, {
     key: "start",
     value: function start() {
-      // Enable the animation
-      this.task.enabled = true; // Call the animate method to get the ball rolling
+      // If the task isnt running
+      if (this.task.enabled == undefined || this.task.enabled == false) {
+        // Enable the animation
+        this.task.enabled = true; // Call the animate method to get the ball rolling
 
-      this.animate(); // Call the start callback
+        this.animate(); // Call the start callback
 
-      this.callback('start');
+        this.callback('start');
+      }
     }
   }, {
     key: "stop",
     value: function stop() {
-      // Disable the animation
-      this.task.enabled = false; // Call the stop callback
+      // if the task is running
+      if (this.task.enabled) {
+        // Disable the animation
+        this.task.enabled = false; // Call the stop callback
 
-      this.callback('stop');
+        this.callback('stop');
+      }
     }
   }, {
     key: "end",
     value: function end() {
-      // Disable the animation
-      this.task.enabled = false; // Call the end callback
+      // if the task is running
+      if (this.task.enabled) {
+        // Disable the animation
+        this.task.enabled = false; // Call the end callback
 
-      this.callback('end');
+        this.callback('end');
+      }
     }
   }, {
     key: "callback",

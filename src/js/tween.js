@@ -75,26 +75,35 @@ export default class Tween {
   }
 
   start() {
-    // Enable the animation
-    this.task.enabled = true;
-    // Call the animate method to get the ball rolling
-    this.animate();
-    // Call the start callback
-    this.callback('start');
+    // If the task isnt running
+    if (this.task.enabled == undefined || this.task.enabled == false) {
+      // Enable the animation
+      this.task.enabled = true;
+      // Call the animate method to get the ball rolling
+      this.animate();
+      // Call the start callback
+      this.callback('start');
+    }
   }
 
   stop() {
-    // Disable the animation
-    this.task.enabled = false;
-    // Call the stop callback
-    this.callback('stop');
+    // if the task is running
+    if (this.task.enabled) {
+      // Disable the animation
+      this.task.enabled = false;
+      // Call the stop callback
+      this.callback('stop');
+    }
   }
 
   end() {
-    // Disable the animation
-    this.task.enabled = false;
-    // Call the end callback
-    this.callback('end');
+    // if the task is running
+    if (this.task.enabled) {
+      // Disable the animation
+      this.task.enabled = false;
+      // Call the end callback
+      this.callback('end');
+    }
   }
 
   callback(type) {
