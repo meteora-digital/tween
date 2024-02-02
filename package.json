@@ -2,7 +2,7 @@
   "name": "@meteora-digital/tween",
   "version": "1.0.1",
   "description": "A class to tween number values - can be used to animate element styles",
-  "main": "dist/js/tween.js",
+  "main": "dist/index.js",
   "scripts": {
     "test": "npm i && npm run build",
     "build": "webpack"
