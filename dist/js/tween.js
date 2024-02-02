@@ -1,159 +1,178 @@
 "use strict";
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports["default"] = void 0;
-
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, _toPropertyKey(descriptor.key), descriptor); } }
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
+function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : String(i); }
+function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
+/**
+ * Ease in out function.
+ * @param {Number} t - Current time.
+ * @param {Number} b - Start value.
+ * @param {Number} c - Change in value.
+ * @param {Number} d - Duration.
+ */
+function easeInOut(t, b, c, d) {
+  t /= d / 2;
+  if (t < 1) return c / 2 * t * t + b;
+  t--;
+  return -c / 2 * (t * (t - 2) - 1) + b;
+}
 
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
-
-/*-------------------------------------------------------------------
-A simple tweening function - pass in a from / to value and a function
--------------------------------------------------------------------*/
-var Tween = /*#__PURE__*/function () {
-  function Tween() {
+/**
+ * TweenController class for managing animations.
+ */
+var TweenController = /*#__PURE__*/function () {
+  /**
+   * Constructor for the TweenController class.
+   * @param {Object} options - User provided options.
+   */
+  function TweenController() {
     var options = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
-
-    _classCallCheck(this, Tween);
-
-    this.enabled = false; // This will be the default function
-
+    _classCallCheck(this, TweenController);
+    this.enabled = false;
     this["default"] = function (value) {
       return console.log(value);
-    }; // Store the events here
+    };
+    this.events = {};
 
-
-    this.events = {}; // User settings defaults
-
-    this.settings = {
+    // Merge user options with default settings
+    this.settings = Object.assign({
       fps: 60
-    }; // Assign the user options to the settings
+    }, options);
 
-    for (var key in this.settings) {
-      if (this.settings.hasOwnProperty(key) && options.hasOwnProperty(key)) this.settings[key] = options[key];
-    } // Used to throttle the functions and lock at a certain FPS
-
-
+    // Time related properties
     this.time = {
       previous: null,
       current: null,
       elapsed: null,
       interval: 1000 / this.settings.fps
-    }; // This will hold the current task
+    };
 
+    // Task related properties
     this.task = {};
   }
 
-  _createClass(Tween, [{
+  /**
+   * Method to start a new tween.
+   * @param {Object} tween - Object with 'from' and 'to' properties.
+   * @param {Function} func - Function to be called on each tween step.
+   * @param {Number} duration - Duration of the tween in milliseconds.
+   */
+  _createClass(TweenController, [{
     key: "tween",
     value: function tween() {
       var _tween = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {
         from: 0,
         to: 100
       };
-
       var func = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : this["default"];
       var duration = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 300;
-      // Load in the new task
       this.task = {
         tween: _tween,
         func: func,
         duration: duration
-      }; // Call the start method to get the ball rolling
-
+      };
       this.start();
     }
+
+    /**
+     * Method to animate the tween.
+     */
   }, {
     key: "animate",
     value: function animate() {
       var _this = this;
+      if (this.task.enabled && this.task.tween.from !== this.task.tween.to && typeof this.task.func === 'function') {
+        this.time.elapsed = Date.now() - this.time.start; // Calculate the time since the start of the animation
 
-      // If it needs to tween and we have a valid tween function
-      if (this.task.enabled && this.task.tween.from != this.task.tween.to && this.task.func && typeof this.task.func == 'function') {
-        // Some FPS maths
-        this.time.current = Date.now();
-        this.time.elapsed = this.time.current - this.time.previous; // Change the value of the tween
+        // Calculate the current tween value using the easing function
+        var currentValue = easeInOut(this.time.elapsed, this.task.tween.from, this.task.tween.to - this.task.tween.from, this.task.duration);
 
-        this.task.tween.from -= Math.round((this.task.tween.from - this.task.tween.to) / (this.task.duration / 100) * 100) / 100; // If the time is right
+        // Check if the tween is complete
+        if (this.time.elapsed >= this.task.duration) {
+          currentValue = this.task.tween.to;
+          this.task.enabled = false;
+        }
 
-        if (this.time.elapsed >= this.time.interval) {
-          // More FPS maths
-          this.time.previous = this.time.current - this.time.elapsed % this.time.interval; // Check if the tween's value is what is needs to be
+        // Call the user-provided function with the current tween value
+        this.task.func(currentValue);
 
-          if (Math.round(this.task.tween.from) == this.task.tween.to) this.task.tween.from = this.task.tween.to; // Call the function
-
-          this.task.func(this.task.tween.from);
-        } // Call the function again
-
-
-        window.requestAnimationFrame(function () {
-          return _this.animate();
-        });
-      } else if (this.task.tween.from == this.task.tween.to) {
-        // End the tween function
+        // Request the next animation frame
+        if (this.task.enabled) {
+          window.requestAnimationFrame(function () {
+            return _this.animate();
+          });
+        }
+      } else if (this.task.tween.from === this.task.tween.to) {
         this.end();
       }
     }
+
+    /**
+     * Method to start the animation.
+     */
   }, {
     key: "start",
     value: function start() {
-      // If the task isnt running
-      if (this.task.enabled == undefined || this.task.enabled == false) {
-        // Enable the animation
-        this.task.enabled = true; // Call the animate method to get the ball rolling
-
-        this.animate(); // Call the start callback
-
+      if (!this.task.enabled) {
+        this.task.enabled = true;
+        this.time.start = Date.now(); // Track the start time of the animation
+        this.animate();
         this.callback('start');
       }
     }
+
+    /**
+     * Method to stop the animation.
+     */
   }, {
     key: "stop",
     value: function stop() {
-      // if the task is running
       if (this.task.enabled) {
-        // Disable the animation
-        this.task.enabled = false; // Call the stop callback
-
+        this.task.enabled = false;
         this.callback('stop');
       }
     }
+
+    /**
+     * Method to end the animation.
+     */
   }, {
     key: "end",
     value: function end() {
-      // if the task is running
       if (this.task.enabled) {
-        // Disable the animation
-        this.task.enabled = false; // Call the end callback
-
+        this.task.enabled = false;
         this.callback('end');
       }
     }
+
+    /**
+     * Method to call a callback function.
+     * @param {String} type - The type of event.
+     */
   }, {
     key: "callback",
     value: function callback(type) {
-      // run the callback functions
       if (this.events[type]) this.events[type].forEach(function (event) {
         return event();
       });
     }
+
+    /**
+     * Method to add an event listener.
+     * @param {String} event - The event to listen for.
+     * @param {Function} func - The function to call when the event is triggered.
+     */
   }, {
     key: "on",
     value: function on(event, func) {
-      // If we loaded an event and it's not the on event and we also loaded a function
-      if (event && event != 'on' && event != 'callback' && this[event] && func && typeof func == 'function') {
-        if (this.events[event] == undefined) this.events[event] = []; // Push a new event to the event array
-
+      if (event && event !== 'on' && event !== 'callback' && this[event] && func && typeof func === 'function') {
+        if (!this.events[event]) this.events[event] = [];
         this.events[event].push(func);
       }
     }
   }]);
-
-  return Tween;
+  return TweenController;
 }();
-
-exports["default"] = Tween;
