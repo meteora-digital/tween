@@ -15,7 +15,7 @@ function easeInOut(t, b, c, d) {
 /**
  * TweenController class for managing animations.
  */
-class TweenController {
+export default class TweenController {
   /**
    * Constructor for the TweenController class.
    * @param {Object} options - User provided options.
