@@ -1,6 +1,6 @@
 {
   "name": "@meteora-digital/tween",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "A class to tween number values - can be used to animate element styles",
   "main": "dist/index.js",
   "scripts": {
