@@ -65,24 +65,22 @@ export default class TweenController {
       this.time.elapsed = Date.now() - this.time.start; // Calculate the time since the start of the animation
 
       // Calculate the current tween value using the easing function
-      let currentValue = easeInOut(this.time.elapsed, this.task.tween.from, this.task.tween.to - this.task.tween.from, this.task.duration);
+      this.task.tween.value = easeInOut(this.time.elapsed, this.task.tween.from, this.task.tween.to - this.task.tween.from, this.task.duration);
 
       // Check if the tween is complete
       if (this.time.elapsed >= this.task.duration) {
-        currentValue = this.task.tween.to;
+        this.task.tween.value = this.task.tween.to;
         this.task.enabled = false;
       }
 
       // Call the user-provided function with the current tween value
-      this.task.func(currentValue);
+      this.task.func(this.task.tween.value);
 
       // Request the next animation frame
-      if (this.task.enabled) {
-        window.requestAnimationFrame(() => this.animate());
-      }
-    } else if (this.task.tween.from === this.task.tween.to) {
-      this.end();
+      if (this.task.enabled) return window.requestAnimationFrame(() => this.animate());
     }
+
+    if (this.task.tween.value === this.task.tween.to) this.end();
   }
 
   /**
@@ -113,8 +111,9 @@ export default class TweenController {
   end() {
     if (this.task.enabled) {
       this.task.enabled = false;
-      this.callback('end');
     }
+
+    this.callback('end');
   }
 
   /**
